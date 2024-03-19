@@ -47,6 +47,7 @@ public class FilmController {
                 log.trace("Фильм обновлён");
             } else {
                 log.warn("Нет задачи с таким id: " + film.getId());
+                throw new RuntimeException("Ошибка обновления Фильма");
             }
         } catch (ValidationException e) {
             log.warn("Фильм не прошел валидацию");

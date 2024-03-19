@@ -45,6 +45,7 @@ public class UserController {
                 log.trace("Юзер обновлён");
             } else {
                 log.warn("Нет Юзера с таким id: " + user.getId());
+                throw new RuntimeException("Ошибка обновления Юзера");
             }
         } catch (ValidationException e) {
             log.warn("Обновлённый юзер не прошел валидацию");
