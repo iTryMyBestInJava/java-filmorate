@@ -4,7 +4,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.validators.UserValidator;
-import ru.yandex.practicum.filmorate.validators.ValidationException;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -25,30 +24,22 @@ public class UserController {
 
     @PostMapping
     public User addUser(@Valid @RequestBody User user) {
-        try {
-            UserValidator.validateUser(user);
-            log.trace("Юзер прошел валидацию.");
-            user.setId(IdGenerator.generateId());
-            log.trace("Юзеру установлен id: " + user.getId());
-        } catch (ValidationException e) {
-            log.warn("Юзер не прошел валидацию");
-        }
+        UserValidator.validateUser(user);
+        log.trace("Юзер прошел валидацию.");
+        user.setId(IdGenerator.generateId());
+        log.trace("Юзеру установлен id: " + user.getId());
         return user;
     }
 
     @PutMapping
     public User updateUser(@Valid @RequestBody User user) {
-        try {
-            UserValidator.validateUser(user);
-            if (users.containsKey(user.getId())) {
-                users.put(user.getId(), user);
-                log.trace("Юзер обновлён");
-            } else {
-                log.warn("Нет Юзера с таким id: " + user.getId());
-                throw new RuntimeException("Ошибка обновления Юзера");
-            }
-        } catch (ValidationException e) {
-            log.warn("Обновлённый юзер не прошел валидацию");
+        UserValidator.validateUser(user);
+        if (users.containsKey(user.getId())) {
+            users.put(user.getId(), user);
+            log.trace("Юзер обновлён");
+        } else {
+            log.warn("Нет Юзера с таким id: " + user.getId());
+            throw new RuntimeException("Ошибка обновления Юзера");
         }
         return user;
     }

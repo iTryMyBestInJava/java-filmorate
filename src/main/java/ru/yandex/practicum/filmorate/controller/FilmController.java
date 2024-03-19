@@ -5,7 +5,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.validators.FilmValidator;
-import ru.yandex.practicum.filmorate.validators.ValidationException;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -26,31 +25,23 @@ public class FilmController {
 
     @PostMapping
     public Film addFilm(@Valid @RequestBody Film film) {
-        try {
-            FilmValidator.validateFilm(film);
-            log.trace("Фильм прошел валидацию, щас будем ставить id");
-            film.setId(IdGenerator.generateId());
-            log.trace("Фильму установлен id: " + film.getId());
-            films.put(film.getId(), film);
-        } catch (ValidationException e) {
-            log.warn("Фильм не прошёл валидацию");
-        }
+        FilmValidator.validateFilm(film);
+        log.trace("Фильм прошел валидацию, щас будем ставить id");
+        film.setId(IdGenerator.generateId());
+        log.trace("Фильму установлен id: " + film.getId());
+        films.put(film.getId(), film);
         return film;
     }
 
     @PutMapping
     public Film updateFilm(@Valid @RequestBody Film film) {
-        try {
-            FilmValidator.validateFilm(film);
-            if (films.containsKey(film.getId())) {
-                films.put(film.getId(), film);
-                log.trace("Фильм обновлён");
-            } else {
-                log.warn("Нет задачи с таким id: " + film.getId());
-                throw new RuntimeException("Ошибка обновления Фильма");
-            }
-        } catch (ValidationException e) {
-            log.warn("Фильм не прошел валидацию");
+        FilmValidator.validateFilm(film);
+        if (films.containsKey(film.getId())) {
+            films.put(film.getId(), film);
+            log.trace("Фильм обновлён");
+        } else {
+            log.warn("Нет задачи с таким id: " + film.getId());
+            throw new RuntimeException("Ошибка обновления Фильма");
         }
         return film;
     }
