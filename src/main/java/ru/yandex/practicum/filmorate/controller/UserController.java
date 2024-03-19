@@ -28,6 +28,7 @@ public class UserController {
         log.trace("Юзер прошел валидацию.");
         user.setId(IdGenerator.generateId());
         log.trace("Юзеру установлен id: " + user.getId());
+        users.put(user.getId(), user);
         return user;
     }
 
