@@ -23,7 +23,7 @@ public class UserController {
         return new ArrayList<>(users.values());
     }
 
-    @PutMapping
+    @PostMapping
     public User addUser(@Valid @RequestBody User user) {
         try {
             UserValidator.validateUser(user);
@@ -36,7 +36,7 @@ public class UserController {
         return user;
     }
 
-    @PostMapping
+    @PutMapping
     public User updateUser(@Valid @RequestBody User user) {
         try {
             UserValidator.validateUser(user);

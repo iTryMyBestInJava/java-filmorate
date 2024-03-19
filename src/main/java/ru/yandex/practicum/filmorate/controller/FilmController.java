@@ -24,7 +24,7 @@ public class FilmController {
         return new ArrayList<>(films.values());
     }
 
-    @PutMapping
+    @PostMapping
     public Film addFilm(@Valid @RequestBody Film film) {
         try {
             FilmValidator.validateFilm(film);
@@ -38,7 +38,7 @@ public class FilmController {
         return film;
     }
 
-    @PostMapping
+    @PutMapping
     public Film updateFilm(@Valid @RequestBody Film film) {
         try {
             FilmValidator.validateFilm(film);
