@@ -15,7 +15,7 @@ import java.util.Map;
 @RestController
 @Slf4j
 public class UserController {
-    Map<Integer, User> users = new HashMap<>();
+    private Map<Integer, User> users = new HashMap<>();
 
     @GetMapping
     public List<User> getUserList() {
@@ -43,5 +43,8 @@ public class UserController {
             throw new RuntimeException("Ошибка обновления Юзера");
         }
         return user;
+    }
+    public User getUser(int id){
+        return users.get(id);
     }
 }

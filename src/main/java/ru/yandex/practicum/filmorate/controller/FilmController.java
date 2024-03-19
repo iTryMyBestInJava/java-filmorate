@@ -16,7 +16,7 @@ import java.util.Map;
 @RestController
 @Slf4j
 public class FilmController {
-    Map<Integer, Film> films = new HashMap<>();
+    private Map<Integer, Film> films = new HashMap<>();
 
     @GetMapping
     public List<Film> getFilmList() {
@@ -44,5 +44,8 @@ public class FilmController {
             throw new RuntimeException("Ошибка обновления Фильма");
         }
         return film;
+    }
+    public Film getFilm(int id){
+        return films.get(id);
     }
 }

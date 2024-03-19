@@ -6,7 +6,7 @@ import ru.yandex.practicum.filmorate.model.User;
 @Slf4j
 public class UserValidator {
     public static boolean validateUser(User user) throws ValidationException {
-        if (user.getLogin().contains(" ")) {
+        if (user.getLogin() == null || user.getLogin().contains(" ")) {
             log.warn("Юзер не прошел валидацию");
             throw new ValidationException("Ошибка. Логин содержит пробелы.");
         }
