@@ -27,7 +27,7 @@ public class FilmController {
     public Film addFilm(@Valid @RequestBody Film film) {
         FilmValidator.validateFilm(film);
         log.trace("Фильм прошел валидацию, щас будем ставить id");
-        film.setId(IdGenerator.generateId());
+        film.setId(IdGenerator.generateFilmId());
         log.trace("Фильму установлен id: " + film.getId());
         films.put(film.getId(), film);
         return film;

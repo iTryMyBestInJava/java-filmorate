@@ -26,7 +26,7 @@ public class UserController {
     public User addUser(@Valid @RequestBody User user) {
         UserValidator.validateUser(user);
         log.trace("Юзер прошел валидацию.");
-        user.setId(IdGenerator.generateId());
+        user.setId(IdGenerator.generateUserId());
         log.trace("Юзеру установлен id: " + user.getId());
         users.put(user.getId(), user);
         return user;
