@@ -6,8 +6,8 @@ import lombok.Data;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
-import java.time.Duration;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+
 
 /**
  * Film.
@@ -16,11 +16,11 @@ import java.time.LocalDateTime;
 @Builder
 public class Film {
     int id;
-    LocalDateTime releaseDate;
+    LocalDate releaseDate;
     @NotBlank
     String name;
     @Size(max = 200, message = "Длина описания превышает 200 символов.")
     String description;
     @Positive
-    Duration duration;
+    int duration;
 }

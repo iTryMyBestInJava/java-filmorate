@@ -7,7 +7,7 @@ public class UserValidator {
         if (user.getLogin().contains(" ")) {
             throw new ValidationException("Ошибка. Логин содержит пробелы.");
         }
-        if (user.getName().isBlank()) {
+        if (user.getName() == null || user.getName().isBlank()) {
             user.setName(user.getLogin());
         }
         return true;
