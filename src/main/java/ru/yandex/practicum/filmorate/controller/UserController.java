@@ -44,7 +44,8 @@ public class UserController {
         }
         return user;
     }
-    public User getUser(int id){
+
+    public User getUser(int id) {
         return users.get(id);
     }
 }
