@@ -16,6 +16,7 @@ import java.util.Map;
 @Slf4j
 public class FilmController {
     private Map<Integer, Film> films = new HashMap<>();
+    private final IdGenerator idGenerator = new IdGenerator();
 
     @GetMapping
     public List<Film> getFilmList() {
@@ -25,9 +26,9 @@ public class FilmController {
     @PostMapping
     public Film addFilm(@Valid @RequestBody Film film) {
         FilmValidator.validateFilm(film);
-        log.trace("Фильм прошел валидацию, щас будем ставить id");
-        film.setId(IdGenerator.generateFilmId());
-        log.trace("Фильму установлен id: " + film.getId());
+        log.debug("Фильм прошел валидацию, щас будем ставить id");
+        film.setId(idGenerator.generateId());
+        log.debug("Фильму установлен id: " + film.getId());
         films.put(film.getId(), film);
         return film;
     }
@@ -37,9 +38,9 @@ public class FilmController {
         FilmValidator.validateFilm(film);
         if (films.containsKey(film.getId())) {
             films.put(film.getId(), film);
-            log.trace("Фильм обновлён");
+            log.debug("Фильм c id: {} обновлён", film.getId());
         } else {
-            log.warn("Нет задачи с таким id: " + film.getId());
+            log.warn("Нет задачи с таким id: {}", film.getId());
             throw new RuntimeException("Ошибка обновления Фильма");
         }
         return film;

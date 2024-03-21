@@ -16,6 +16,7 @@ import java.util.Map;
 @Slf4j
 public class UserController {
     private Map<Integer, User> users = new HashMap<>();
+    private final IdGenerator idGenerator = new IdGenerator();
 
     @GetMapping
     public List<User> getUserList() {
@@ -25,9 +26,9 @@ public class UserController {
     @PostMapping
     public User addUser(@Valid @RequestBody User user) {
         UserValidator.validateUser(user);
-        log.trace("Юзер прошел валидацию.");
-        user.setId(IdGenerator.generateUserId());
-        log.trace("Юзеру установлен id: " + user.getId());
+        log.debug("Юзер прошел валидацию.");
+        user.setId(idGenerator.generateId());
+        log.debug("Юзеру установлен id: {}", user.getId());
         users.put(user.getId(), user);
         return user;
     }
@@ -37,9 +38,9 @@ public class UserController {
         UserValidator.validateUser(user);
         if (users.containsKey(user.getId())) {
             users.put(user.getId(), user);
-            log.trace("Юзер обновлён");
+            log.debug("Юзер c id: {} обновлён", user.getId());
         } else {
-            log.warn("Нет Юзера с таким id: " + user.getId());
+            log.warn("Нет Юзера с таким id: {}", user.getId());
             throw new RuntimeException("Ошибка обновления Юзера");
         }
         return user;
